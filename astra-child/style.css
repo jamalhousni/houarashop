@@ -1,0 +1,18 @@
+/*
+ Theme Name:     HOUARA-SHOP Child
+ Theme URI:      https://houarashop.com
+ Description:    Child theme of Astra for HOUARA-SHOP. All custom templates live here to survive parent theme updates.
+ Author:         Jamal Al-Housni
+ Author URI:     https://houarashop.com
+ Template:       astra
+ Version:        1.0.0
+ Text Domain:    astra-child
+*/
+
+/*
+ * All custom site CSS lives in WP Admin → Appearance → Customize → Additional CSS
+ * (the existing houarashop-woo-style stays there — no need to move it)
+ *
+ * This file only needs the theme header comment above for WordPress
+ * to recognize this as a valid child theme of Astra.
+ */
