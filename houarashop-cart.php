@@ -489,7 +489,7 @@ add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
       echo '<div class="trust-row">
         <div class="trust-item"><span class="icon">💳</span>الدفع عند الاستلام</div>
         <div class="trust-item"><span class="icon">🔒</span>100% آمن</div>
-        <div class="trust-item"><span class="icon">↩️</span>استرداد مضمون</div>
+        <div class="trust-item"><span class="icon">🚚</span>توصيل نفس اليوم</div>
       </div>';
     });
 

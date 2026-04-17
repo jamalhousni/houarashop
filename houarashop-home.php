@@ -234,7 +234,6 @@
         <div class="trust-item"><span class="trust-icon">💰</span><span>الدفع عند الاستلام</span></div>
         <div class="trust-item"><span class="trust-icon">⭐</span><span>جودة مضمونة</span></div>
         <div class="trust-item"><span class="trust-icon">📞</span><span>خدمة محلية موثوقة</span></div>
-        <div class="trust-item"><span class="trust-icon">🔄</span><span>إرجاع مجاني 7 أيام</span></div>
     </div>
 </div>
 
@@ -303,7 +302,7 @@
         <div class="why-card"><div class="why-icon">🚀</div><h3>توصيل نفس اليوم</h3><p>اطلب قبل 4 مساءً واستلم طلبك اليوم حتى الساعة 11 ليلاً</p></div>
         <div class="why-card"><div class="why-icon">💰</div><h3>دفع عند الاستلام</h3><p>لا تحتاج لبطاقة بنكية. ادفع نقداً عند وصول طلبك</p></div>
         <div class="why-card"><div class="why-icon">📍</div><h3>متجر محلي موثوق</h3><p>نحن من أولاد تايمة — نعرف احتياجاتكم ونهتم بثقتكم</p></div>
-        <div class="why-card"><div class="why-icon">⭐</div><h3>جودة مضمونة</h3><p>كل منتج مجرب ومضمون. إرجاع مجاني خلال 7 أيام</p></div>
+        <div class="why-card"><div class="why-icon">⭐</div><h3>جودة مضمونة</h3><p>كل منتج مجرب ومضمون قبل الإرسال</p></div>
     </div>
 </section>
 
@@ -321,7 +320,7 @@
     <div class="footer-links">
         <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
         <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
-        <a href="#">سياسة الإرجاع</a>
+        <a href="<?php echo home_url('/contact/'); ?>">تواصل معنا</a>
         <a href="https://wa.me/212702048470" target="_blank">واتساب</a>
     </div>
     <p class="footer-copy">© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة</p>

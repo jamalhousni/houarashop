@@ -237,7 +237,7 @@
     <div class="footer-links">
         <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
         <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
-        <a href="#">سياسة الإرجاع</a>
+        <a href="<?php echo home_url('/contact/'); ?>">تواصل معنا</a>
         <a href="https://wa.me/212702048470" target="_blank">واتساب</a>
     </div>
     <p class="footer-copy">© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة</p>
