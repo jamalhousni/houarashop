@@ -506,6 +506,45 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
 }
     
+
+/* --- QUICK ACTIONS (Buy Now + WhatsApp) --- */
+.hs-quick-actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+.hs-buy-now-btn { 
+    flex: 1; min-width: 180px;
+    background: linear-gradient(135deg, #FF6B00, #FF8C00) !important; 
+    color: #fff !important; 
+    font-family: 'Cairo', sans-serif !important; 
+    font-size: 1rem !important; 
+    font-weight: 800 !important; 
+    padding: 14px 24px !important; 
+    border-radius: 10px !important; 
+    text-align: center !important; 
+    text-decoration: none !important; 
+    transition: transform 0.15s, box-shadow 0.2s !important;
+    box-shadow: 0 4px 12px rgba(255,107,0,0.3) !important;
+    display: inline-block !important;
+}
+.hs-buy-now-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,107,0,0.4) !important; color: #fff !important; }
+.hs-whatsapp-btn { 
+    flex: 1; min-width: 180px;
+    background: #25D366 !important; 
+    color: #fff !important; 
+    font-family: 'Cairo', sans-serif !important; 
+    font-size: 1rem !important; 
+    font-weight: 800 !important; 
+    padding: 14px 24px !important; 
+    border-radius: 10px !important; 
+    text-align: center !important; 
+    text-decoration: none !important; 
+    transition: transform 0.15s, background 0.2s !important;
+    display: inline-block !important;
+}
+.hs-whatsapp-btn:hover { transform: translateY(-2px); background: #1ebe5a !important; color: #fff !important; }
+@media (max-width: 600px) {
+    .hs-quick-actions { flex-direction: column; }
+    .hs-buy-now-btn, .hs-whatsapp-btn { width: 100%; min-width: 100%; }
+}
+
 /* --- STICKY MOBILE BUY BAR --- */
 .sticky-mobile-buy { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; padding: 12px 15px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 9999; gap: 12px; border-top: 1px solid #f0f0f0; }
 .btn-sticky-cart { flex: 2; background: #FF6B00; color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; transition: background 0.2s;}
@@ -559,6 +598,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 </header>
 
 
+<?php
+// Inject Buy Now + WhatsApp buttons AFTER the Add to Cart button
+add_action('woocommerce_after_add_to_cart_button', 'houarashop_add_buy_now_and_whatsapp_buttons');
+function houarashop_add_buy_now_and_whatsapp_buttons() {
+    global $product;
+    if (!$product || !$product->is_purchasable()) return;
+    
+    $product_id = $product->get_id();
+    $product_name = $product->get_name();
+    $product_price = $product->get_price();
+    $product_url = $product->get_permalink();
+    $checkout_url = wc_get_checkout_url();
+    
+    $wa_message = urlencode("مرحبا، أود طلب هذا المنتج:
+
+📦 " . $product_name . "
+💰 السعر: " . $product_price . " درهم
+🔗 " . $product_url);
+    $wa_url = 'https://wa.me/212702048470?text=' . $wa_message;
+    
+    $buy_now_url = $checkout_url . '?add-to-cart=' . $product_id;
+    
+    echo '<div class="hs-quick-actions">';
+    echo '<a href="' . esc_url($buy_now_url) . '" class="hs-buy-now-btn">⚡ اشتري الآن</a>';
+    echo '<a href="' . esc_url($wa_url) . '" class="hs-whatsapp-btn" target="_blank">💬 اطلب عبر واتساب</a>';
+    echo '</div>';
+}
+?>
 <div class="product-single-wrapper">
     <?php while ( have_posts() ) : ?>
         <?php the_post(); ?>
@@ -580,7 +647,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="footer-links">
         <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
         <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
-        <a href="#">سياسة الإرجاع</a>
         <a href="https://wa.me/212702048470" target="_blank">واتساب</a>
     </div>
     <p class="footer-copy">© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة</p>
@@ -645,58 +711,19 @@ if (typeof jQuery !== 'undefined') {
 <!-- STICKY MOBILE BUY BAR -->
 <div class="sticky-mobile-buy">
     <button class="btn-sticky-cart" onclick="document.querySelector('.single_add_to_cart_button').click(); return false;">إضافة إلى السلة</button>
-    <a href="https://wa.me/212702048470?text=مرحبا، أود طلب هذا المنتج" class="btn-sticky-wa" target="_blank">واتساب</a>
+    <a href="<?php 
+        global $product;
+        $product_name = $product ? $product->get_name() : '';
+        $product_price = $product ? $product->get_price() : '';
+        $product_url = $product ? $product->get_permalink() : '';
+        $wa_message = urlencode("مرحبا، أود طلب هذا المنتج:
+
+📦 " . $product_name . "
+💰 السعر: " . $product_price . " درهم
+🔗 " . $product_url);
+        echo 'https://wa.me/212702048470?text=' . $wa_message;
+        ?>" class="btn-sticky-wa" target="_blank">💬 واتساب</a>
 </div>
-
-
-<!-- SOCIAL PROOF POPUP -->
-<div id="social-proof-popup" class="social-proof-popup">
-    <div class="sp-icon">✅</div>
-    <div class="sp-content">
-        <p class="sp-title"><span id="sp-name"></span> طلب للتو <span id="sp-product"></span></p>
-        <p class="sp-time">منذ <span id="sp-time"></span> دقائق - أولاد تايمة</p>
-    </div>
-</div>
-
-<style>
-.social-proof-popup { position: fixed; bottom: 20px; left: 20px; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 15px 20px; display: flex; align-items: center; gap: 15px; z-index: 9999; transform: translateY(150px); opacity: 0; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); border: 1px solid #f0f0f0; direction: rtl; width: 320px; }
-.social-proof-popup.show { transform: translateY(0); opacity: 1; }
-.sp-icon { font-size: 24px; background: #e8f5e9; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-.sp-content { flex: 1; }
-.sp-title { font-family: 'Cairo', sans-serif; color: #1A1A2E; font-size: 14px; font-weight: 700; margin: 0 0 5px 0 !important; line-height: 1.4; }
-.sp-title span { color: #FF6B00; }
-.sp-time { font-family: 'Cairo', sans-serif; color: #888; font-size: 12px; margin: 0 !important; }
-@media (max-width: 768px) {
-    .social-proof-popup { bottom: 90px; left: 50%; transform: translate(-50%, 150px); width: 90%; }
-    .social-proof-popup.show { transform: translate(-50%, 0); }
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var names = ["أحمد", "فاطمة", "يوسف", "خديجة", "كريم", "سعيد", "زينب", "مريم", "إلياس", "حسن", "ابتسام", "هشام"];
-    var products = ["قاطعة الخضروات", "كابل الشحن السريع", "حامل الهاتف المغناطيسي"];
-    var popup = document.getElementById('social-proof-popup');
-    if(!popup) return;
-    
-    function showPopup() {
-        var randomName = names[Math.floor(Math.random() * names.length)];
-        var randomProduct = products[Math.floor(Math.random() * products.length)];
-        var randomTime = Math.floor(Math.random() * 45) + 2; 
-        
-        document.getElementById('sp-name').innerText = randomName;
-        document.getElementById('sp-product').innerText = '"' + randomProduct + '"';
-        document.getElementById('sp-time').innerText = randomTime;
-        
-        popup.classList.add('show');
-        setTimeout(function() { popup.classList.remove('show'); }, 6000); 
-    }
-
-    setTimeout(showPopup, 5000);
-    setInterval(showPopup, 20000);
-});
-</script>
-
 
 <!-- FIX WOOCOMMERCE AJAX SCROLL JUMP -->
 <script>

@@ -632,55 +632,6 @@ if (typeof jQuery !== 'undefined') {
 
 <?php wp_footer(); ?>
 
-<!-- SOCIAL PROOF POPUP -->
-<div id="social-proof-popup" class="social-proof-popup">
-    <div class="sp-icon">✅</div>
-    <div class="sp-content">
-        <p class="sp-title"><span id="sp-name"></span> طلب للتو <span id="sp-product"></span></p>
-        <p class="sp-time">منذ <span id="sp-time"></span> دقائق - أولاد تايمة</p>
-    </div>
-</div>
-
-<style>
-.social-proof-popup { position: fixed; bottom: 20px; left: 20px; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 15px 20px; display: flex; align-items: center; gap: 15px; z-index: 9999; transform: translateY(150px); opacity: 0; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); border: 1px solid #f0f0f0; direction: rtl; width: 320px; }
-.social-proof-popup.show { transform: translateY(0); opacity: 1; }
-.sp-icon { font-size: 24px; background: #e8f5e9; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-.sp-content { flex: 1; }
-.sp-title { font-family: 'Cairo', sans-serif; color: #1A1A2E; font-size: 14px; font-weight: 700; margin: 0 0 5px 0 !important; line-height: 1.4; }
-.sp-title span { color: #FF6B00; }
-.sp-time { font-family: 'Cairo', sans-serif; color: #888; font-size: 12px; margin: 0 !important; }
-@media (max-width: 768px) {
-    .social-proof-popup { bottom: 90px; left: 50%; transform: translate(-50%, 150px); width: 90%; }
-    .social-proof-popup.show { transform: translate(-50%, 0); }
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var names = ["أحمد", "فاطمة", "يوسف", "خديجة", "كريم", "سعيد", "زينب", "مريم", "إلياس", "حسن", "ابتسام", "هشام"];
-    var products = ["قاطعة الخضروات", "كابل الشحن السريع", "حامل الهاتف المغناطيسي"];
-    var popup = document.getElementById('social-proof-popup');
-    if(!popup) return;
-    
-    function showPopup() {
-        var randomName = names[Math.floor(Math.random() * names.length)];
-        var randomProduct = products[Math.floor(Math.random() * products.length)];
-        var randomTime = Math.floor(Math.random() * 45) + 2; 
-        
-        document.getElementById('sp-name').innerText = randomName;
-        document.getElementById('sp-product').innerText = '"' + randomProduct + '"';
-        document.getElementById('sp-time').innerText = randomTime;
-        
-        popup.classList.add('show');
-        setTimeout(function() { popup.classList.remove('show'); }, 6000); 
-    }
-
-    setTimeout(showPopup, 5000);
-    setInterval(showPopup, 20000);
-});
-</script>
-
-
 <!-- FIX WOOCOMMERCE AJAX SCROLL JUMP -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
