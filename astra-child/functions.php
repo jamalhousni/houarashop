@@ -7,11 +7,12 @@
 defined( 'ABSPATH' ) || exit;
 
 // ═══════════════════════════════════════════════════════════════
-// TRACKING IDs
+// TRACKING IDs + SITE CONSTANTS
 // ═══════════════════════════════════════════════════════════════
 define( 'HOUARA_GA4_ID',   'G-BDBDXF3PJX' );
 define( 'HOUARA_PIXEL_ID', '1709168983788060' );
 define( 'HOUARA_LOGO_URL', 'https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png' );
+define( 'HOUARA_OG_IMAGE', 'https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png' );
 
 
 // ═══════════════════════════════════════════════════════════════
@@ -25,9 +26,126 @@ function houarashop_child_enqueue_styles() {
 
 
 // ═══════════════════════════════════════════════════════════════
+// OPEN GRAPH + SCHEMA — SEO & Social Preview
+// Tells Google, Facebook, WhatsApp what image + info to show
+// ═══════════════════════════════════════════════════════════════
+add_action( 'wp_head', 'houarashop_og_and_schema', 1 );
+function houarashop_og_and_schema() {
+    global $post;
+
+    // ── Determine page-specific values ──
+    $site_name   = 'هوارة شوب';
+    $site_url    = home_url('/');
+    $logo_url    = HOUARA_OG_IMAGE;
+    $description = 'متجرك المحلي في أولاد تايمة — توصيل في نفس اليوم، دفع عند الاستلام. أفضل المنتجات بأسعار مناسبة.';
+
+    if ( is_singular( 'product' ) && $post ) {
+        $product    = wc_get_product( $post->ID );
+        $title      = get_the_title() . ' — هوارة شوب';
+        $desc       = $product ? wp_strip_all_tags( $product->get_short_description() ?: $product->get_description() ) : $description;
+        $desc       = $desc ?: $description;
+        $url        = get_permalink();
+        $thumb_id   = get_post_thumbnail_id( $post->ID );
+        $thumb_url  = $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'large' ) : $logo_url;
+        $og_type    = 'product';
+    } elseif ( is_home() || is_front_page() ) {
+        $title      = 'هوارة شوب — توصيل في نفس اليوم بأولاد تايمة';
+        $desc       = $description;
+        $url        = $site_url;
+        $thumb_url  = $logo_url;
+        $og_type    = 'website';
+    } else {
+        $title      = ( is_page() && $post ? get_the_title() . ' — ' : '' ) . $site_name;
+        $desc       = $description;
+        $url        = get_permalink() ?: $site_url;
+        $thumb_url  = $logo_url;
+        $og_type    = 'website';
+    }
+
+    // Trim description to 160 chars for SEO
+    $desc = mb_substr( strip_tags( $desc ), 0, 160 );
+    ?>
+<!-- ── Open Graph (Facebook, WhatsApp, Telegram previews) ── -->
+<meta property="og:type"               content="<?php echo esc_attr( $og_type ); ?>">
+<meta property="og:site_name"          content="<?php echo esc_attr( $site_name ); ?>">
+<meta property="og:title"              content="<?php echo esc_attr( $title ); ?>">
+<meta property="og:description"        content="<?php echo esc_attr( $desc ); ?>">
+<meta property="og:url"                content="<?php echo esc_url( $url ); ?>">
+<meta property="og:image"              content="<?php echo esc_url( $thumb_url ); ?>">
+<meta property="og:image:width"        content="1200">
+<meta property="og:image:height"       content="630">
+<meta property="og:image:alt"          content="<?php echo esc_attr( $site_name ); ?>">
+<meta property="og:locale"             content="ar_MA">
+
+<!-- ── Twitter / X Card ── -->
+<meta name="twitter:card"              content="summary_large_image">
+<meta name="twitter:title"             content="<?php echo esc_attr( $title ); ?>">
+<meta name="twitter:description"       content="<?php echo esc_attr( $desc ); ?>">
+<meta name="twitter:image"             content="<?php echo esc_url( $thumb_url ); ?>">
+
+<!-- ── Meta description (for Google snippet) ── -->
+<meta name="description"               content="<?php echo esc_attr( $desc ); ?>">
+
+<!-- ── Local Business Schema (JSON-LD) ── -->
+<!-- Tells Google this is a real local shop in Ouled Teima -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "هوارة شوب",
+  "alternateName": "Houara Shop",
+  "url": "https://houarashop.com",
+  "logo": "<?php echo esc_url( $logo_url ); ?>",
+  "image": "<?php echo esc_url( $logo_url ); ?>",
+  "description": "متجر إلكتروني محلي في أولاد تايمة — توصيل في نفس اليوم، دفع عند الاستلام",
+  "telephone": "+212702048470",
+  "email": "houarashop.store@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "أولاد تايمة",
+    "addressLocality": "أولاد تايمة",
+    "addressRegion": "سوس-ماسة",
+    "postalCode": "83350",
+    "addressCountry": "MA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 30.3104,
+    "longitude": -9.1675
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "08:00",
+      "closes": "23:00"
+    }
+  ],
+  "sameAs": [
+    "https://wa.me/212702048470"
+  ],
+  "priceRange": "درهم",
+  "currenciesAccepted": "MAD",
+  "paymentAccepted": "الدفع عند الاستلام",
+  "areaServed": {
+    "@type": "City",
+    "name": "أولاد تايمة"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "منتجات هوارة شوب",
+    "url": "https://houarashop.com/matjar/"
+  }
+}
+</script>
+    <?php
+}
+
+
+// ═══════════════════════════════════════════════════════════════
 // GOOGLE ANALYTICS 4
 // ═══════════════════════════════════════════════════════════════
-add_action( 'wp_head', 'houarashop_ga4_script', 1 );
+add_action( 'wp_head', 'houarashop_ga4_script', 2 );
 function houarashop_ga4_script() {
     if ( ! HOUARA_GA4_ID ) return;
     $ga4 = esc_js( HOUARA_GA4_ID );
@@ -47,7 +165,7 @@ function houarashop_ga4_script() {
 // ═══════════════════════════════════════════════════════════════
 // FACEBOOK PIXEL
 // ═══════════════════════════════════════════════════════════════
-add_action( 'wp_head', 'houarashop_pixel_script', 2 );
+add_action( 'wp_head', 'houarashop_pixel_script', 3 );
 function houarashop_pixel_script() {
     if ( ! HOUARA_PIXEL_ID ) return;
     $pixel_id = esc_js( HOUARA_PIXEL_ID );
@@ -185,7 +303,6 @@ function houarashop_hide_wc_notices_css() {
     .tax-product_cat .woocommerce-message,
     .home .woocommerce-message,
     .page-template-houarashop-home .woocommerce-message { display: none !important; }
-
     .woocommerce ul.products li.product a.added_to_cart,
     .woocommerce ul.products li.product .added_to_cart,
     .woocommerce-loop-product__link + .added_to_cart,
@@ -202,34 +319,13 @@ add_action( 'wp_head', 'houarashop_stock_indicator_css', 10 );
 function houarashop_stock_indicator_css() {
     ?>
     <style>
-    .houara-stock-badge {
-        display: inline-flex; align-items: center; gap: 5px;
-        font-family: 'Cairo', sans-serif !important;
-        font-size: 0.78rem !important; font-weight: 700 !important;
-        padding: 4px 10px !important; border-radius: 20px !important;
-        margin: 0 16px 8px !important; width: fit-content;
-    }
-    .houara-stock-badge.in-stock  { background: #e8f5e9; color: #2e7d32; }
-    .houara-stock-badge.low-stock { background: #fff3e0; color: #e65100; animation: houara-pulse 2s ease-in-out infinite; }
-    .houara-stock-badge.out-stock { background: #f5f5f5; color: #9e9e9e; }
+    .houara-stock-badge { display:inline-flex; align-items:center; gap:5px; font-family:'Cairo',sans-serif !important; font-size:0.78rem !important; font-weight:700 !important; padding:4px 10px !important; border-radius:20px !important; margin:0 16px 8px !important; width:fit-content; }
+    .houara-stock-badge.in-stock  { background:#e8f5e9; color:#2e7d32; }
+    .houara-stock-badge.low-stock { background:#fff3e0; color:#e65100; animation:houara-pulse 2s ease-in-out infinite; }
+    .houara-stock-badge.out-stock { background:#f5f5f5; color:#9e9e9e; }
     @keyframes houara-pulse { 0%,100%{opacity:1} 50%{opacity:0.65} }
-    .woocommerce ul.products li.product.houara-out-of-stock a img { filter: grayscale(40%); opacity: 0.8; }
-    .woocommerce ul.products li.product.houara-out-of-stock .button.add_to_cart_button {
-        background: #e0e0e0 !important; color: #9e9e9e !important;
-        cursor: not-allowed !important; pointer-events: none !important;
-    }
-
-    /* ── LOGO STYLES ── */
-    .logo-img-link { display: inline-flex; align-items: center; text-decoration: none; line-height: 1; }
-    .site-logo-img { height: 44px; width: auto; object-fit: contain; display: block; }
-    .site-logo-img--mobile { height: 36px; }
-    .site-logo-img--footer { height: 38px; filter: brightness(0) invert(1); opacity: 0.85; }
-    /* Checkout header logo (smaller) */
-    .houara-logo .site-logo-img { height: 38px; }
-    @media (max-width: 768px) {
-        .site-logo-img { height: 36px; }
-        .site-logo-img--mobile { height: 30px; }
-    }
+    .woocommerce ul.products li.product.houara-out-of-stock a img { filter:grayscale(40%); opacity:0.8; }
+    .woocommerce ul.products li.product.houara-out-of-stock .button.add_to_cart_button { background:#e0e0e0 !important; color:#9e9e9e !important; cursor:not-allowed !important; pointer-events:none !important; }
     </style>
     <?php
 }
@@ -293,26 +389,11 @@ add_action( 'wp_footer', 'houarashop_viewer_counter', 20 );
 function houarashop_viewer_counter() {
     ?>
     <style>
-    .houara-viewers {
-        display: flex; align-items: center; gap: 5px;
-        font-family: 'Cairo', sans-serif; font-size: 0.75rem; font-weight: 700;
-        color: #e65100; margin: 0 16px 6px; direction: rtl;
-    }
-    .houara-viewers .viewer-dot {
-        width: 7px; height: 7px; background: #e65100; border-radius: 50%;
-        animation: viewer-blink 1.4s ease-in-out infinite; flex-shrink: 0;
-    }
+    .houara-viewers { display:flex; align-items:center; gap:5px; font-family:'Cairo',sans-serif; font-size:0.75rem; font-weight:700; color:#e65100; margin:0 16px 6px; direction:rtl; }
+    .houara-viewers .viewer-dot { width:7px; height:7px; background:#e65100; border-radius:50%; animation:viewer-blink 1.4s ease-in-out infinite; flex-shrink:0; }
     @keyframes viewer-blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
-    .single-product .houara-viewers-single {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: #fff3e0; border: 1px solid #ffcc80; border-radius: 8px;
-        padding: 8px 14px; font-family: 'Cairo', sans-serif; font-size: 0.9rem;
-        font-weight: 700; color: #e65100; direction: rtl; margin-bottom: 12px;
-    }
-    .houara-viewers-single .viewer-dot {
-        width: 9px; height: 9px; background: #e65100; border-radius: 50%;
-        animation: viewer-blink 1.4s ease-in-out infinite;
-    }
+    .single-product .houara-viewers-single { display:inline-flex; align-items:center; gap:8px; background:#fff3e0; border:1px solid #ffcc80; border-radius:8px; padding:8px 14px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:700; color:#e65100; direction:rtl; margin-bottom:12px; }
+    .houara-viewers-single .viewer-dot { width:9px; height:9px; background:#e65100; border-radius:50%; animation:viewer-blink 1.4s ease-in-out infinite; }
     </style>
     <script>
     (function() {

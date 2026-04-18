@@ -1,18 +1,54 @@
 /*
- Theme Name:     HOUARA-SHOP Child
- Theme URI:      https://houarashop.com
- Description:    Child theme of Astra for HOUARA-SHOP. All custom templates live here to survive parent theme updates.
- Author:         Jamal Al-Housni
- Author URI:     https://houarashop.com
- Template:       astra
- Version:        1.0.0
- Text Domain:    astra-child
-*/
-
-/*
- * All custom site CSS lives in WP Admin → Appearance → Customize → Additional CSS
- * (the existing houarashop-woo-style stays there — no need to move it)
- *
- * This file only needs the theme header comment above for WordPress
- * to recognize this as a valid child theme of Astra.
+ * HOUARA-SHOP Child Theme
+ * Inherits everything from Astra parent.
+ * Put site-wide overrides here.
  */
+
+/* ── LOGO — global sizing, applies to ALL pages ── */
+.logo-img-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+}
+
+/* Header logo — 44px tall, auto width */
+.site-logo-img {
+    height: 44px !important;
+    width: auto !important;
+    max-width: 160px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+/* Mobile nav logo — slightly smaller */
+.site-logo-img--mobile {
+    height: 36px !important;
+    width: auto !important;
+    max-width: 130px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+/* Footer logo — white inverted, same size as header */
+.site-logo-img--footer {
+    height: 38px !important;
+    width: auto !important;
+    max-width: 140px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.85 !important;
+    margin: 0 auto !important;
+}
+
+/* Checkout header — slightly smaller */
+.houara-header .site-logo-img {
+    height: 40px !important;
+}
+
+@media (max-width: 768px) {
+    .site-logo-img { height: 36px !important; }
+    .site-logo-img--mobile { height: 30px !important; }
+    .site-logo-img--footer { height: 32px !important; }
+}
