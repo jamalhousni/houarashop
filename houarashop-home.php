@@ -85,11 +85,7 @@
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 35px rgba(0,0,0,0.12); }
         .product-badge { position: absolute; top: 12px; right: 12px; background: #FF6B00; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; z-index: 1; }
         .product-badge.stock { background: #e74c3c; left: 12px; right: auto; }
-        .product-img {
-            width: 100%; height: 220px;
-            overflow: hidden; background: #f0f0f0;
-            position: relative; display: block;
-        }
+        .product-img { width: 100%; height: 220px; overflow: hidden; background: #f0f0f0; position: relative; display: block; }
         .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .product-img a { display: block; width: 100%; height: 100%; }
         .product-img .emoji-placeholder { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 60px; }
@@ -104,8 +100,8 @@
         .btn-buy-now:hover { background: #e55f00; color: #fff; transform: translateY(-2px); }
         .btn-icon-cart { width: 46px; height: 46px; background: rgba(255,107,0,0.1) !important; color: #FF6B00 !important; display: flex !important; align-items: center !important; justify-content: center !important; border-radius: 8px !important; font-size: 20px !important; transition: all 0.3s !important; padding: 0 !important; border: 1px solid rgba(255,107,0,0.2) !important; line-height: 1 !important; }
         .btn-icon-cart:hover, .btn-icon-cart.added { background: #FF6B00 !important; color: #fff !important; transform: translateY(-2px) !important; }
-        .btn-icon-cart::before, .btn-icon-cart::after, .btn-icon-cart.added::after { display: none !important; } /* Override Astra */
-        .product-actions .added_to_cart { display: none !important; } /* Hide WC default view cart link that breaks layout */
+        .btn-icon-cart::before, .btn-icon-cart::after, .btn-icon-cart.added::after { display: none !important; }
+        .product-actions .added_to_cart { display: none !important; }
         .btn-add-cart { width: 100%; background: #FF6B00 !important; color: #fff !important; padding: 13px !important; border: none; border-radius: 8px !important; font-size: 16px !important; font-weight: 700 !important; text-align: center !important; display: block !important; margin: 0 !important; font-family: 'Cairo', sans-serif !important; cursor: pointer; transition: all 0.3s !important; }
         .btn-add-cart:hover { background: #e55f00 !important; transform: translateY(-2px) !important; color: #fff !important;}
         .btn-add-cart::after, .btn-add-cart::before { display: none !important; }
@@ -122,12 +118,12 @@
         .why-card h3 { color: #fff; font-size: 17px; font-weight: 700; margin-bottom: 8px; }
         .why-card p { color: #aab4c8; font-size: 14px; line-height: 1.6; }
 
-        /* WHATSAPP CTA */
-        .whatsapp-section { background: #25D366; padding: 60px 40px; text-align: center; }
-        .whatsapp-section h2 { color: #fff; font-size: 28px; font-weight: 900; margin-bottom: 12px; }
-        .whatsapp-section p { color: rgba(255,255,255,0.85); font-size: 16px; margin-bottom: 30px; }
-        .btn-wa-big { background: #fff; color: #25D366; padding: 18px 50px; border-radius: 8px; font-size: 18px; font-weight: 900; display: inline-flex; align-items: center; gap: 12px; font-family: 'Cairo', sans-serif; transition: all 0.3s; }
-        .btn-wa-big:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        /* WHATSAPP CTA — compact */
+        .whatsapp-section { background: #25D366; padding: 28px 40px; text-align: center; }
+        .whatsapp-section h2 { color: #fff; font-size: 20px; font-weight: 900; margin-bottom: 6px; }
+        .whatsapp-section p { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 16px; }
+        .btn-wa-big { background: #fff; color: #25D366; padding: 12px 32px; border-radius: 8px; font-size: 15px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; font-family: 'Cairo', sans-serif; transition: all 0.3s; }
+        .btn-wa-big:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
 
         /* FOOTER */
         .site-footer { background: #111122; padding: 40px; text-align: center; }
@@ -158,7 +154,8 @@
             .price-new { font-size: 15px; }
             .delivery-badge { font-size: 10px; padding: 3px 6px; }
             .btn-add-cart { font-size: 13px; padding: 10px; }
-            .why-section, .whatsapp-section { padding: 40px 20px; }
+            .why-section { padding: 40px 20px; }
+            .whatsapp-section { padding: 24px 20px; }
             .why-grid { grid-template-columns: repeat(2, 1fr); }
             .site-footer { padding: 30px 20px; }
         }
@@ -334,7 +331,6 @@ function updateTimer() {
         cutoff.setDate(cutoff.getDate() + 1);
         isPastCutoff = true;
     }
-    
     var txtToday = document.getElementById('promo-text-today');
     var txtTomorrow = document.getElementById('promo-text-tomorrow');
     if (txtToday && txtTomorrow) {
@@ -346,7 +342,6 @@ function updateTimer() {
             txtTomorrow.style.display = 'none';
         }
     }
-
     var diff = cutoff - now;
     var h = Math.floor(diff / 3600000);
     var m = Math.floor((diff % 3600000) / 60000);
@@ -356,7 +351,6 @@ function updateTimer() {
 updateTimer();
 setInterval(updateTimer, 60000);
 
-// 2705 CART COUNT FIX: Fetch live count from server on every page load
 jQuery(document).ready(function($) {
     $.post("<?php echo admin_url("admin-ajax.php"); ?>", {action: "houara_cart_count"}, function(data) {
         if (data && data.success && data.data) {
@@ -377,7 +371,6 @@ function closeMenu() {
     document.body.style.overflow = '';
 }
 
-// Instant cart counter update logic
 if (typeof jQuery !== 'undefined') {
     jQuery(document).on('added_to_cart', function() {
         var countBadge = jQuery('.cart-count-badge');
@@ -392,24 +385,16 @@ if (typeof jQuery !== 'undefined') {
 
 <?php wp_footer(); ?>
 
-<!-- FIX WOOCOMMERCE AJAX SCROLL JUMP -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     if (typeof jQuery !== 'undefined') {
         var lastScrollY = 0;
-        
         jQuery(document).on('click', '.add_to_cart_button, .single_add_to_cart_button', function() {
             lastScrollY = window.scrollY;
         });
-
         jQuery(document.body).on('added_to_cart', function() {
-            // Instantly stop WooCommerce and Astra from animating to the top
             jQuery('html, body').stop(true, true);
-            
-            // Lock the screen to the current position
             window.scrollTo(0, lastScrollY);
-            
-            // Double enforce it to defeat any delayed animations
             setTimeout(function() { window.scrollTo(0, lastScrollY); }, 50);
             setTimeout(function() { window.scrollTo(0, lastScrollY); }, 300);
         });
