@@ -91,10 +91,10 @@
         .product-img .emoji-placeholder { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 60px; }
         .product-info { padding: 18px; }
         .product-name { font-size: 17px; font-weight: 700; color: #1A1A2E; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; word-break: break-word; }
-        .product-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .product-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
         .price-new { font-size: 22px; font-weight: 900; color: #FF6B00; }
         .price-old { font-size: 15px; color: #aaa; text-decoration: line-through; }
-        .delivery-badge { background: #e8f5e9; color: #27AE60; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
+        .delivery-badge { background: #e8f5e9; color: #27AE60; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
         .product-actions { display: flex; gap: 8px; align-items: center; width: 100%; }
         .btn-buy-now { flex: 1; background: #FF6B00; color: #fff; padding: 12px; text-align: center; border-radius: 8px; font-size: 16px; font-weight: 700; transition: transform 0.3s, background 0.3s; border: none; font-family: 'Cairo', sans-serif; display: block; }
         .btn-buy-now:hover { background: #e55f00; color: #fff; transform: translateY(-2px); }
@@ -105,6 +105,23 @@
         .btn-add-cart { width: 100%; background: #FF6B00 !important; color: #fff !important; padding: 13px !important; border: none; border-radius: 8px !important; font-size: 16px !important; font-weight: 700 !important; text-align: center !important; display: block !important; margin: 0 !important; font-family: 'Cairo', sans-serif !important; cursor: pointer; transition: all 0.3s !important; }
         .btn-add-cart:hover { background: #e55f00 !important; transform: translateY(-2px) !important; color: #fff !important;}
         .btn-add-cart::after, .btn-add-cart::before { display: none !important; }
+
+        /* STOCK INDICATOR */
+        .stock-indicator { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; font-size: 12px; font-weight: 700; border-radius: 20px; padding: 4px 10px; width: fit-content; }
+        .stock-indicator.in-stock { background: #e8f5e9; color: #2e7d32; }
+        .stock-indicator.low-stock { background: #fff3e0; color: #e65100; animation: pulse-stock 2s ease-in-out infinite; }
+        @keyframes pulse-stock { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .stock-indicator.out-of-stock { background: #f5f5f5; color: #9e9e9e; }
+        .product-card.out-of-stock-card { opacity: 0.75; }
+        .product-card.out-of-stock-card .product-img::after {
+            content: 'نفذ المخزون';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.45);
+            color: #fff; font-family: 'Cairo', sans-serif;
+            font-size: 18px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .btn-out-of-stock { width: 100%; background: #e0e0e0 !important; color: #9e9e9e !important; padding: 13px !important; border: none; border-radius: 8px !important; font-size: 16px !important; font-weight: 700 !important; text-align: center !important; display: block !important; margin: 0 !important; font-family: 'Cairo', sans-serif !important; cursor: not-allowed !important; }
 
         /* WHY US */
         .why-section { background: #1A1A2E; padding: 60px 40px; text-align: center; }
@@ -118,7 +135,7 @@
         .why-card h3 { color: #fff; font-size: 17px; font-weight: 700; margin-bottom: 8px; }
         .why-card p { color: #aab4c8; font-size: 14px; line-height: 1.6; }
 
-        /* WHATSAPP CTA — compact */
+        /* WHATSAPP CTA */
         .whatsapp-section { background: #25D366; padding: 28px 40px; text-align: center; }
         .whatsapp-section h2 { color: #fff; font-size: 20px; font-weight: 900; margin-bottom: 6px; }
         .whatsapp-section p { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 16px; }
@@ -127,8 +144,7 @@
 
         /* FOOTER */
         .site-footer { background: #111122; padding: 40px; text-align: center; }
-        .footer-logo { color: #fff; font-size: 22px; font-weight: 900; margin-bottom: 10px; }
-        .footer-logo span { color: #FF6B00; }
+        .footer-logo { margin-bottom: 10px; }
         .footer-tagline { color: #aab4c8; font-size: 14px; margin-bottom: 20px; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
         .footer-links a { color: #aab4c8; font-size: 14px; }
@@ -159,7 +175,6 @@
             .why-grid { grid-template-columns: repeat(2, 1fr); }
             .site-footer { padding: 30px 20px; }
         }
-
         @media (max-width: 400px) {
             .products-grid { grid-template-columns: 1fr; }
             .why-grid { grid-template-columns: 1fr; }
@@ -174,7 +189,7 @@
 <!-- MOBILE NAV -->
 <nav class="mobile-nav" id="mobileNav">
     <div class="mobile-nav-header">
-        <div class="mobile-nav-logo">هوارة <span>شوب</span></div>
+        <a href="<?php echo home_url('/'); ?>" class="logo-img-link"><img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img site-logo-img--mobile" /></a>
         <button class="close-nav" onclick="closeMenu()">✕</button>
     </div>
     <a href="<?php echo home_url('/'); ?>">🏠 الرئيسية</a>
@@ -198,7 +213,7 @@
         <button class="hamburger" onclick="openMenu()">
             <span></span><span></span><span></span>
         </button>
-        <div class="logo">هوارة <span>شوب</span></div>
+        <a href="<?php echo home_url('/'); ?>" class="logo-img-link"><img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img" /></a>
     </div>
     <nav class="header-nav">
         <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
@@ -248,14 +263,19 @@
     <div class="products-grid">
         <?php while ($products->have_posts()) : $products->the_post();
             global $product;
-            $regular_price = $product->get_regular_price();
-            $sale_price    = $product->get_sale_price();
-            $current_price = $product->get_price();
-            $stock         = $product->get_stock_quantity();
+            $regular_price  = $product->get_regular_price();
+            $sale_price     = $product->get_sale_price();
+            $current_price  = $product->get_price();
+            $stock          = $product->get_stock_quantity();
+            $manage_stock   = $product->get_manage_stock();
+            $in_stock       = $product->is_in_stock();
+            if ( ! $in_stock ) { $stock_state = 'out'; }
+            elseif ( $manage_stock && $stock !== null && $stock <= 5 ) { $stock_state = 'low'; }
+            elseif ( $manage_stock && $stock !== null && $stock <= 10 ) { $stock_state = 'medium'; }
+            else { $stock_state = 'plenty'; }
         ?>
-        <div class="product-card">
+        <div class="product-card<?php echo $stock_state === 'out' ? ' out-of-stock-card' : ''; ?>">
             <?php if ($product->is_on_sale()) : ?><div class="product-badge">خصم!</div><?php endif; ?>
-            <?php if ($stock && $stock <= 10) : ?><div class="product-badge stock">باقي <?php echo $stock; ?> فقط!</div><?php endif; ?>
             <div class="product-img">
                 <?php if (has_post_thumbnail()) : the_post_thumbnail('medium'); else : ?>
                 <div class="emoji-placeholder">📦</div>
@@ -267,16 +287,24 @@
                     <span class="price-new"><?php echo $current_price; ?> درهم</span>
                     <?php if ($sale_price && $regular_price) : ?><span class="price-old"><?php echo $regular_price; ?> درهم</span><?php endif; ?>
                 </div>
-                <div class="delivery-badge">✅ توصيل اليوم لأولاد تايمة</div>
-                <?php if ( $product->is_type( 'simple' ) && $product->is_purchasable() && $product->is_in_stock() ) : ?>
+                <?php if ( $stock_state === 'out' ) : ?>
+                    <div class="stock-indicator out-of-stock">❌ نفذ المخزون</div>
+                <?php elseif ( $stock_state === 'low' ) : ?>
+                    <div class="stock-indicator low-stock">🔴 باقي <?php echo (int) $stock; ?> فقط — اطلب الآن!</div>
+                <?php elseif ( $stock_state === 'medium' ) : ?>
+                    <div class="stock-indicator low-stock">⚠️ باقي <?php echo (int) $stock; ?> قطع</div>
+                <?php else : ?>
+                    <div class="stock-indicator in-stock">✅ متوفر — توصيل اليوم</div>
+                <?php endif; ?>
+                <?php if ( $stock_state !== 'out' && $product->is_type('simple') && $product->is_purchasable() ) : ?>
                     <div class="product-actions">
                         <a href="?add-to-cart=<?php echo esc_attr( $product->get_id() ); ?>" data-quantity="1" class="btn-icon-cart button add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr( $product->get_id() ); ?>" data-product_sku="<?php echo esc_attr( $product->get_sku() ); ?>" aria-label="أضف للسلة" rel="nofollow" title="أضف للسلة">🛒</a>
                         <a href="<?php echo wc_get_checkout_url(); ?>?add-to-cart=<?php echo esc_attr( $product->get_id() ); ?>" class="btn-buy-now">اشتري الآن ⚡</a>
                     </div>
+                <?php elseif ( $stock_state === 'out' ) : ?>
+                    <div class="product-actions"><span class="btn-out-of-stock">❌ نفذ المخزون</span></div>
                 <?php else : ?>
-                    <div class="product-actions">
-                        <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="btn-add-cart">🛒 اختر الخيارات</a>
-                    </div>
+                    <div class="product-actions"><a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="btn-add-cart">🛒 اختر الخيارات</a></div>
                 <?php endif; ?>
             </div>
         </div>
@@ -312,7 +340,7 @@
 
 <!-- FOOTER -->
 <footer class="site-footer">
-    <div class="footer-logo">هوارة <span>شوب</span></div>
+    <div class="footer-logo"><img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img site-logo-img--footer" /></div>
     <p class="footer-tagline">متجرك المحلي في أولاد تايمة — توصيل في نفس اليوم</p>
     <div class="footer-links">
         <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
@@ -327,20 +355,12 @@
 function updateTimer() {
     var now = new Date(), cutoff = new Date(), isPastCutoff = false;
     cutoff.setHours(16, 0, 0, 0);
-    if (now >= cutoff) {
-        cutoff.setDate(cutoff.getDate() + 1);
-        isPastCutoff = true;
-    }
+    if (now >= cutoff) { cutoff.setDate(cutoff.getDate() + 1); isPastCutoff = true; }
     var txtToday = document.getElementById('promo-text-today');
     var txtTomorrow = document.getElementById('promo-text-tomorrow');
     if (txtToday && txtTomorrow) {
-        if (isPastCutoff) {
-            txtToday.style.display = 'none';
-            txtTomorrow.style.display = 'inline';
-        } else {
-            txtToday.style.display = 'inline';
-            txtTomorrow.style.display = 'none';
-        }
+        if (isPastCutoff) { txtToday.style.display = 'none'; txtTomorrow.style.display = 'inline'; }
+        else { txtToday.style.display = 'inline'; txtTomorrow.style.display = 'none'; }
     }
     var diff = cutoff - now;
     var h = Math.floor(diff / 3600000);
@@ -353,9 +373,7 @@ setInterval(updateTimer, 60000);
 
 jQuery(document).ready(function($) {
     $.post("<?php echo admin_url("admin-ajax.php"); ?>", {action: "houara_cart_count"}, function(data) {
-        if (data && data.success && data.data) {
-            $(".houara-cart-count").text(data.data.text);
-        }
+        if (data && data.success && data.data) { $(".houara-cart-count").text(data.data.text); }
     });
     $(document.body).trigger("wc_fragment_refresh");
 });
@@ -370,17 +388,6 @@ function closeMenu() {
     document.getElementById('overlay').classList.remove('open');
     document.body.style.overflow = '';
 }
-
-if (typeof jQuery !== 'undefined') {
-    jQuery(document).on('added_to_cart', function() {
-        var countBadge = jQuery('.cart-count-badge');
-        if (countBadge.length) {
-            countBadge.text(parseInt(countBadge.text() || 0) + 1);
-            countBadge.parent().css({ transform: 'scale(1.1)', transition: 'transform 0.2s', display: 'inline-block' });
-            setTimeout(function() { countBadge.parent().css('transform', 'scale(1)'); }, 300);
-        }
-    });
-}
 </script>
 
 <?php wp_footer(); ?>
@@ -389,9 +396,7 @@ if (typeof jQuery !== 'undefined') {
 document.addEventListener("DOMContentLoaded", function() {
     if (typeof jQuery !== 'undefined') {
         var lastScrollY = 0;
-        jQuery(document).on('click', '.add_to_cart_button, .single_add_to_cart_button', function() {
-            lastScrollY = window.scrollY;
-        });
+        jQuery(document).on('click', '.add_to_cart_button, .single_add_to_cart_button', function() { lastScrollY = window.scrollY; });
         jQuery(document.body).on('added_to_cart', function() {
             jQuery('html, body').stop(true, true);
             window.scrollTo(0, lastScrollY);
