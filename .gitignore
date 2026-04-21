@@ -1,0 +1,134 @@
+# ========================================
+# HOUARA-SHOP .gitignore
+# Last updated: Apr 21, 2026
+# ========================================
+
+# -----------------------------
+# OS-generated files
+# -----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+Icon?
+._*
+
+# -----------------------------
+# Editor / IDE files
+# -----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+*~
+.project
+.settings/
+nbproject/
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+logs/
+debug.log
+error.log
+error_log
+
+# -----------------------------
+# Environment / secrets — NEVER commit
+# -----------------------------
+.env
+.env.*
+*.env
+credentials.json
+secrets.json
+wp-config.php
+wp-config-local.php
+wp-config-sample.php.bak
+.htpasswd
+
+# -----------------------------
+# WordPress — things that shouldn't be in a theme/plugin repo
+# -----------------------------
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup/
+wp-content/backups/
+wp-content/updraft/
+wp-content/backup-db/
+wp-content/ai1wm-backups/
+wp-content/upgrade/
+wp-content/advanced-cache.php
+wp-content/db.php
+wp-content/object-cache.php
+
+# LiteSpeed Cache plugin temp files
+litespeed-cache/
+litespeed/
+
+# -----------------------------
+# Dependencies (if you add Composer / npm later)
+# -----------------------------
+node_modules/
+vendor/
+bower_components/
+composer.lock
+package-lock.json
+yarn.lock
+
+# -----------------------------
+# Build / temp output
+# -----------------------------
+dist/
+build/
+.tmp/
+tmp/
+*.bak
+*.backup
+*.old
+*.orig
+
+# -----------------------------
+# WordPress plugin zip files (keep source, ignore built zips)
+# -----------------------------
+*.zip
+
+# -----------------------------
+# Database dumps / exports
+# -----------------------------
+*.sql
+*.sql.gz
+*.sql.zip
+*.dump
+
+# -----------------------------
+# Images / binaries you might not want tracked
+# (Uncomment if you use a CDN or don't want large files in git)
+# -----------------------------
+# *.jpg
+# *.jpeg
+# *.png
+# *.gif
+# *.mp4
+# *.mov
+
+# -----------------------------
+# Local-only notes / session files
+# -----------------------------
+.claude/
+.anthropic/
+local-notes.md
+TODO-local.md
+
+# -----------------------------
+# Security / lockfiles
+# -----------------------------
+*.pem
+*.key
+*.crt
+*.p12
+id_rsa
+id_rsa.pub
+*.ppk

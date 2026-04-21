@@ -10,17 +10,17 @@
     <meta name="google-site-verification" content="-ZId_3E2ruthMpUT7XyHDNysXs1JSxJvN76fFJsC11M" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>هوارة شوب — توصيل في نفس اليوم بأولاد تايمة</title>
+    <title>هوارة شوب — توصيل نفس اليوم في أولاد تايمة | دفع عند الاستلام</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; direction: rtl; background: #fff; color: #333; }
         a { text-decoration: none; color: inherit; }
-        .countdown-bar { background: #FF6B00; padding: 12px 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .countdown-bar p { color: #fff; font-size: 15px; font-weight: 700; }
+        .countdown-bar { background: #FF6B00; padding: 10px 20px; text-align: center; position: relative; z-index: 1001; }
+        .countdown-bar p { color: #fff; font-size: 18px; margin: 0; line-height: 1.2; font-weight: 700; }
         #timer { color: #FFE000; font-weight: 900; direction: ltr; display: inline-block; }
-        .site-header { background: #1A1A2E; padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
+        .site-header { background: #1A1A2E; padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .header-nav { display: flex; gap: 20px; align-items: center; }
         .header-nav a { color: #ccc; font-size: 15px; font-weight: 600; transition: color 0.2s; }
         .header-nav a:hover { color: #FF6B00; }
@@ -102,7 +102,7 @@
         .why-icon { font-size: 40px; margin-bottom: 15px; }
         .why-card h3 { color: #fff; font-size: 17px; font-weight: 700; margin-bottom: 8px; }
         .why-card p { color: #aab4c8; font-size: 14px; line-height: 1.6; }
-        .whatsapp-section { background: #25D366; padding: 28px 40px; text-align: center; }
+        .whatsapp-section { background: #25D366; padding: 20px 40px; text-align: center; }
         .whatsapp-section h2 { color: #fff; font-size: 20px; font-weight: 900; margin-bottom: 6px; }
         .whatsapp-section p { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 16px; }
         .btn-wa-big { background: #fff; color: #25D366; padding: 12px 32px; border-radius: 8px; font-size: 15px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; font-family: 'Cairo', sans-serif; transition: all 0.3s; }
@@ -133,7 +133,7 @@
             .delivery-badge { font-size: 10px; padding: 3px 6px; }
             .btn-add-cart { font-size: 13px; padding: 10px; }
             .why-section { padding: 40px 20px; }
-            .whatsapp-section { padding: 24px 20px; }
+            .whatsapp-section { padding: 15px 20px; }
             .why-grid { grid-template-columns: repeat(2, 1fr); }
             .site-footer { padding: 30px 20px; }
         }
@@ -162,8 +162,8 @@
 </nav>
 <div class="countdown-bar">
     <p>
-        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم - التوصيل داخل مدينة أولاد تايمة &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
-        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة - التوصيل داخل مدينة أولاد تايمة</span>
+        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
+        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة</span>
     </p>
 </div>
 <header class="site-header">
@@ -180,7 +180,7 @@
         <a href="<?php echo get_permalink(wc_get_page_id('myaccount')); ?>">حسابي</a>
     </nav>
     <a href="<?php echo get_permalink(wc_get_page_id('cart')); ?>" class="header-cart">
-        🛒 <span class="houara-cart-count"><?php echo WC()->cart ? WC()->cart->get_cart_contents_count() : '0'; ?> منتج</span>
+        🛒 (<span class="cart-count-badge"><?php echo WC()->cart ? WC()->cart->get_cart_contents_count() : '0'; ?></span>)
     </a>
 </header>
 <section class="hero">
@@ -190,7 +190,6 @@
         <p>التوصيل داخل مدينة أولاد تايمة والنواحي</p>
         <div class="hero-buttons">
             <a href="<?php echo home_url('/matjar/'); ?>" class="btn-primary">🛍️ تسوق الآن</a>
-            <a href="https://wa.me/212702048470?text=مرحبا، أريد الاستفسار عن منتج من هوارة شوب" class="btn-whatsapp" target="_blank">💬 اطلب عبر واتساب</a>
         </div>
     </div>
 </section>
@@ -229,7 +228,9 @@
         <div class="product-card<?php echo $stock_state === 'out' ? ' out-of-stock-card' : ''; ?>">
             <?php if ($product->is_on_sale()) : ?><div class="product-badge">خصم!</div><?php endif; ?>
             <div class="product-img">
-                <?php if (has_post_thumbnail()) : the_post_thumbnail('medium'); else : ?>
+                <?php if (has_post_thumbnail()) :
+                    the_post_thumbnail('medium', array( 'alt' => esc_attr( get_the_title() ) ));
+                else : ?>
                 <div class="emoji-placeholder">📦</div>
                 <?php endif; ?>
             </div>
@@ -285,21 +286,7 @@
     <p>فريقنا متاح كل يوم من 8 صباحاً حتى 11 ليلاً</p>
     <a href="https://wa.me/212702048470?text=مرحبا، أريد الاستفسار عن منتج من هوارة شوب" class="btn-wa-big" target="_blank">💬 ابدأ المحادثة الآن</a>
 </section>
-<footer class="site-footer">
-    <div class="footer-logo">
-        <a href="<?php echo home_url('/'); ?>">
-            <img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img site-logo-img--footer">
-        </a>
-    </div>
-    <p class="footer-tagline">متجرك المحلي في أولاد تايمة — توصيل في نفس اليوم</p>
-    <div class="footer-links">
-        <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
-        <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
-        <a href="<?php echo home_url('/contact/'); ?>">تواصل معنا</a>
-        <a href="https://wa.me/212702048470" target="_blank">واتساب</a>
-    </div>
-    <p class="footer-copy">© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة</p>
-</footer>
+<?php houarashop_render_footer(); ?>
 <script>
 function updateTimer() {
     var now = new Date(), cutoff = new Date(), isPastCutoff = false;

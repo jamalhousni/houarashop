@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) exit;
     <meta name="google-site-verification" content="-ZId_3E2ruthMpUT7XyHDNysXs1JSxJvN76fFJsC11M" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حسابي — هوارة شوب</title>
+    <title>هوارة-شوب</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
     <style>
@@ -35,7 +35,9 @@ if (!defined('ABSPATH')) exit;
         }
         .countdown-bar p {
             color: #fff;
-            font-size: 15px;
+            font-size: 18px;
+            margin: 0;
+            line-height: 1.2;
             font-weight: 700;
         }
         .countdown-bar span#timer {
@@ -180,8 +182,12 @@ if (!defined('ABSPATH')) exit;
         }
 
         /* WooCommerce overrides */
+        .woocommerce-MyAccount-navigation { display: none !important; }
         .woocommerce-MyAccount-content {
             font-family: 'Cairo', sans-serif !important;
+            width: 100% !important;
+            float: none !important;
+            margin: 0 !important;
         }
 
         .woocommerce-MyAccount-content p {
@@ -189,6 +195,31 @@ if (!defined('ABSPATH')) exit;
             line-height: 1.7;
             color: #555;
             margin-bottom: 15px;
+        }
+
+        .houara-hidden-field {
+            display: none !important;
+        }
+
+        .endpoint-dashboard .woocommerce-message, 
+        .endpoint-dashboard .woocommerce-info {
+            display: none !important;
+        }
+
+        .woocommerce-MyAccount-content p a {
+            color: #3498db !important;
+            font-weight: 800 !important;
+            text-decoration: none !important;
+            transition: color 0.2s;
+        }
+
+        .woocommerce-MyAccount-content p a:hover {
+            color: #2980b9 !important;
+            text-decoration: underline !important;
+        }
+
+        .endpoint-dashboard .woocommerce-MyAccount-content > p:first-of-type {
+            display: none !important;
         }
 
         .woocommerce table.shop_table {
@@ -200,21 +231,44 @@ if (!defined('ABSPATH')) exit;
         .woocommerce table.shop_table th {
             background: #1A1A2E;
             color: #fff;
-            padding: 12px 15px;
-            font-size: 14px;
+            padding: 15px;
+            font-size: 15px;
             font-weight: 700;
-            text-align: right;
+            text-align: center;
+            border-left: 1px solid #2a2a4a;
+        }
+
+        .woocommerce table.shop_table th:last-child {
+            border-left: none;
         }
 
         .woocommerce table.shop_table td {
-            padding: 12px 15px;
+            padding: 15px;
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
             color: #444;
+            text-align: center;
+            border-left: 1px solid #f0f0f0;
+        }
+
+        .woocommerce table.shop_table td:last-child {
+            border-left: none;
         }
 
         .woocommerce table.shop_table tr:hover td {
             background: #fafafa;
+        }
+
+        .woocommerce table.shop_table tfoot th {
+            text-align: right;
+            border-bottom: 1px solid #2a2a4a;
+        }
+
+        .woocommerce table.shop_table tfoot td {
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fff;
         }
 
         .woocommerce-orders-table__cell-order-status mark {
@@ -228,6 +282,123 @@ if (!defined('ABSPATH')) exit;
 
         .woocommerce-orders-table__cell-order-status mark.completed {
             color: #27AE60;
+        }
+
+        .woocommerce table.my_account_orders .button.view {
+            background: #1877F2 !important;
+            color: #fff !important;
+            padding: 8px 25px !important;
+            border-radius: 4px !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            display: inline-block;
+            transition: background 0.2s !important;
+            border: none;
+        }
+
+        .woocommerce table.my_account_orders .button.view:hover {
+            background: #105ac2 !important;
+        }
+
+        /* Addresses Layout */
+        .woocommerce-Addresses {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px !important;
+            margin-top: 25px;
+            align-items: start;
+        }
+
+        .woocommerce-Addresses::before,
+        .woocommerce-Addresses::after {
+            display: none !important;
+            content: none !important;
+        }
+        
+        .woocommerce-Addresses .woocommerce-Address {
+            width: 100% !important;
+            border: 1px solid #e5e5e5 !important;
+            background: #fff !important;
+            float: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box;
+        }
+
+        .woocommerce-Address header.woocommerce-Address-title {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #fafafa;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        .woocommerce-Address header.woocommerce-Address-title h3 {
+            margin: 0 !important;
+            font-size: 18px !important;
+            font-weight: 800 !important;
+            color: #1A1A2E !important;
+        }
+
+        .woocommerce-Address header.woocommerce-Address-title a.edit {
+            font-size: 14px !important;
+            color: #FF6B00 !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+        }
+
+        .woocommerce-MyAccount-content address {
+            padding: 15px !important;
+            font-style: normal !important;
+            font-family: 'Cairo', sans-serif !important;
+            line-height: 1.8 !important;
+            color: #555 !important;
+            font-size: 14px !important;
+            text-align: right !important;
+            margin: 0 !important;
+        }
+
+        /* Order Details Addresses Layout */
+        .woocommerce-customer-details .col2-set {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px !important;
+        }
+
+        .woocommerce-customer-details .col2-set::before,
+        .woocommerce-customer-details .col2-set::after {
+            display: none !important;
+            content: none !important;
+        }
+
+        .woocommerce-customer-details .col-1,
+        .woocommerce-customer-details .col-2 {
+            width: 100% !important;
+            border: 1px solid #e5e5e5 !important;
+            background: #fff !important;
+            float: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box;
+        }
+
+        .woocommerce-customer-details h2.woocommerce-column__title {
+            padding: 15px !important;
+            border-bottom: 1px solid #e5e5e5 !important;
+            background: #fafafa !important;
+            margin: 0 !important;
+            font-size: 18px !important;
+            font-weight: 800 !important;
+            color: #1A1A2E !important;
+            text-align: right !important;
+        }
+
+        @media (max-width: 768px) {
+            .woocommerce-Addresses,
+            .woocommerce-customer-details .col2-set {
+                grid-template-columns: 1fr !important;
+            }
         }
 
         /* Forms */
@@ -345,14 +516,18 @@ if (!defined('ABSPATH')) exit;
 <!-- COUNTDOWN BAR -->
 <div class="countdown-bar">
     <p>
-        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم - التوصيل داخل مدينة أولاد تايمة &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
-        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة - التوصيل داخل مدينة أولاد تايمة</span>
+        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
+        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة</span>
     </p>
 </div>
 
 <!-- HEADER -->
 <header class="site-header">
-    <div class="logo">هوارة <span>شوب</span></div>
+    <div class="logo">
+        <a href="<?php echo home_url('/'); ?>" class="logo-img-link">
+            <img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img" style="height: 44px; width: auto; object-fit: contain;">
+        </a>
+    </div>
     <nav class="header-nav">
         <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
         <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
@@ -404,10 +579,10 @@ if (!defined('ABSPATH')) exit;
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="account-main">
+    <?php $endpoint = WC()->query->get_current_endpoint(); ?>
+    <main class="account-main endpoint-<?php echo esc_attr($endpoint ? $endpoint : 'dashboard'); ?>">
         <h2>
             <?php
-            $endpoint = WC()->query->get_current_endpoint();
             $titles = [
                 'orders'       => '📦 طلباتي',
                 'edit-address' => '📍 عناويني',
@@ -429,10 +604,7 @@ if (!defined('ABSPATH')) exit;
 </div>
 
 <!-- FOOTER -->
-<footer class="site-footer">
-    <div class="footer-logo">هوارة <span>شوب</span></div>
-    <p class="footer-copy">© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة</p>
-</footer>
+<?php houarashop_render_footer(); ?>
 
 <!-- COUNTDOWN SCRIPT -->
 <script>

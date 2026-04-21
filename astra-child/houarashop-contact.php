@@ -10,15 +10,15 @@
     <meta name="google-site-verification" content="-ZId_3E2ruthMpUT7XyHDNysXs1JSxJvN76fFJsC11M" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تواصل معنا — هوارة شوب</title>
+    <title>هوارة-شوب</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; direction: rtl; background: #fff; color: #333; }
         a { text-decoration: none; color: inherit; }
-        .countdown-bar { background: #FF6B00; padding: 12px 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .countdown-bar p { color: #fff; font-size: 15px; font-weight: 700; }
+        .countdown-bar { background: #FF6B00; padding: 10px 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
+        .countdown-bar p { color: #fff; font-size: 18px; margin: 0; line-height: 1.2; font-weight: 700; }
         #timer { color: #FFE000; font-weight: 900; direction: ltr; display: inline-block; }
         .site-header { background: #1A1A2E; padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
         .header-nav { display: flex; gap: 20px; align-items: center; }
@@ -79,8 +79,8 @@
 </nav>
 <div class="countdown-bar">
     <p>
-        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم - التوصيل داخل مدينة أولاد تايمة &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
-        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة - التوصيل داخل مدينة أولاد تايمة</span>
+        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
+        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة</span>
     </p>
 </div>
 <header class="site-header">
@@ -121,21 +121,7 @@
         <p style="color: #888; font-size: 15px;">أو اتصل بنا مباشرة على الرقم: <strong style="color: #1A1A2E; font-size: 18px; direction: ltr; display: inline-block;">+212 702 04 84 70</strong></p>
     </div>
 </div>
-<footer class="site-footer">
-    <div class="footer-logo">
-        <a href="<?php echo home_url('/'); ?>">
-            <img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img site-logo-img--footer">
-        </a>
-    </div>
-    <p class="footer-tagline">متجرك المحلي في أولاد تايمة — توصيل في نفس اليوم</p>
-    <div class="footer-links">
-        <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
-        <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
-        <a href="<?php echo home_url('/contact/'); ?>">تواصل معنا</a>
-        <a href="https://wa.me/212702048470" target="_blank">واتساب</a>
-    </div>
-    <p class="footer-copy">© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة</p>
-</footer>
+<?php houarashop_render_footer(); ?>
 <script>
 function updateTimer() {
     var now = new Date(), cutoff = new Date(), isPastCutoff = false;

@@ -5,18 +5,14 @@ add_filter( 'woocommerce_cart_is_block_cart', '__return_false', 9999 );
  * Description: صفحة سلة التسوق — هوارة شوب
  */
 defined('ABSPATH') || exit;
-add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
-    $count = WC()->cart->get_cart_contents_count();
-    $fragments['.houara-cart-count'] = '<span class="houara-cart-count">' . $count . ' منتج</span>';
-    return $fragments;
-});
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
     <meta name="google-site-verification" content="-ZId_3E2ruthMpUT7XyHDNysXs1JSxJvN76fFJsC11M" />
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>سلة التسوق — هوارة شوب</title>
+  <title>هوارة-شوب</title>
   <?php wp_head(); ?>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +22,10 @@ add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
     * { margin:0; padding:0; box-sizing:border-box; }
     html { direction:rtl; }
     body { font-family:'Cairo','Segoe UI',sans-serif; background:var(--gray-bg); color:var(--navy); min-height:100vh; }
+    .countdown-bar { background:var(--orange); padding:10px 20px; text-align:center; }
+    .countdown-bar p { color:#fff; font-size:0.9rem; font-weight:700; margin:0; }
+    .countdown-bar #timer { color:#FFE000; font-weight:900; direction:ltr; display:inline-block; }
+    @media (max-width:600px) { .countdown-bar { padding:8px 12px; } .countdown-bar p { font-size:0.78rem; } }
     .houara-header { background:var(--navy); padding:0 20px; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.3); }
     .houara-header-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:65px; }
     .houara-nav { display:flex; gap:6px; align-items:center; }
@@ -108,8 +108,15 @@ add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
   </div>
   <a href="<?php echo home_url('/'); ?>">🏠 الرئيسية</a>
   <a href="<?php echo home_url('/matjar/'); ?>">🛍️ المتجر</a>
+  <a href="<?php echo home_url('/contact/'); ?>">📞 تواصل معنا</a>
   <a href="<?php echo get_permalink(wc_get_page_id('cart')); ?>">🛒 السلة</a>
   <a href="<?php echo get_permalink(get_option('woocommerce_myaccount_page_id')); ?>">👤 حسابي</a>
+</div>
+<div class="countdown-bar">
+  <p>
+    <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم - التوصيل داخل مدينة أولاد تايمة &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
+    <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة - التوصيل داخل مدينة أولاد تايمة</span>
+  </p>
 </div>
 <header class="houara-header">
   <div class="houara-header-inner">
@@ -122,11 +129,12 @@ add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
     <nav class="houara-nav">
       <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
       <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
+      <a href="<?php echo home_url('/contact/'); ?>">تواصل معنا</a>
       <a href="<?php echo get_permalink(wc_get_page_id('cart')); ?>" class="active">السلة</a>
       <a href="<?php echo get_permalink(get_option('woocommerce_myaccount_page_id')); ?>">حسابي</a>
     </nav>
     <a href="<?php echo get_permalink(wc_get_page_id('cart')); ?>" class="houara-cart-icon">
-      🛒 <span class="houara-cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?> منتج</span>
+      🛒 <span dir="ltr">(<span class="cart-count-badge"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)</span>
     </a>
   </div>
 </header>
@@ -171,12 +179,26 @@ add_filter('woocommerce_add_to_cart_fragments', function($fragments) {
   }
   ?>
 </div>
-<footer class="houara-footer">
-  <p>© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة | <a href="https://wa.me/212702048470">تواصل معنا</a></p>
-</footer>
+<?php houarashop_render_footer(); ?>
 <script>
 function openDrawer() { document.getElementById('mobileDrawer').classList.add('open'); document.getElementById('mobileOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.getElementById('mobileOverlay').classList.remove('open'); document.body.style.overflow=''; }
+function updateTimer() {
+    var now = new Date(), cutoff = new Date(), isPastCutoff = false;
+    cutoff.setHours(16, 0, 0, 0);
+    if (now >= cutoff) { cutoff.setDate(cutoff.getDate() + 1); isPastCutoff = true; }
+    var txtToday = document.getElementById('promo-text-today');
+    var txtTomorrow = document.getElementById('promo-text-tomorrow');
+    if (txtToday && txtTomorrow) {
+        if (isPastCutoff) { txtToday.style.display = 'none'; txtTomorrow.style.display = 'inline'; }
+        else { txtToday.style.display = 'inline'; txtTomorrow.style.display = 'none'; }
+    }
+    var diff = cutoff - now;
+    var h = Math.floor(diff / 3600000), m = Math.floor((diff % 3600000) / 60000);
+    var timerEl = document.getElementById('timer');
+    if (timerEl) timerEl.innerHTML = h + ' h ' + m + ' m';
+}
+updateTimer(); setInterval(updateTimer, 60000);
 jQuery(document.body).on('wc_fragments_refreshed removed_from_cart', function() {
     var productRows = jQuery('table.cart tr.cart_item, table.woocommerce-cart-form__contents tr.cart_item');
     if (productRows.length === 0) { setTimeout(function() { window.location.reload(); }, 400); }

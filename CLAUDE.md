@@ -2,7 +2,7 @@
 
 > This file gives Claude full context about the HOUARA-SHOP project.
 > Read this at the start of every session before doing anything.
-> Last updated: Apr 18 2026
+> Last updated: Apr 21 2026
 
 ---
 
@@ -140,6 +140,29 @@ Long-term vision: become the Marjan/Carrefour of Houara — a trusted local bran
 
 ---
 
+## ✅ COMPLETED TASKS (Apr 21 2026 Session)
+
+### Legal Pages + Pre-launch Compliance
+- ✅ **3 legal pages published live** — `/privacy-policy/`, `/terms/`, `/return-policy/` all live and linked in the footer (Arabic, Law 09-08 compliant, COD-only)
+- ✅ **Meta Pixel + GA4 disclosure added to Privacy Policy** — new sections 5.1 and 5.2 explain what data Meta Pixel and Google Analytics collect, how it's used, and how to opt out. Required for Facebook ad approval in MENA.
+  - File edited: `astra-child/houarashop-privacy.php` (NOT `houarashop-legal.php` — that older combined template isn't the one the live page uses. The WP page uses the "HOUARA Privacy Policy" dedicated template from `houarashop-privacy.php`)
+  - Verified live: `https://houarashop.com/privacy-policy/` contains "Meta Pixel" + "Google Analytics 4" subsections
+- ✅ **Rank Math email typo fixed** — `houarashop.strore@gmail.com` → `houarashop.store@gmail.com` (was in Person schema on every page)
+- ✅ **Rank Math logo URL fixed** — old file `Houara-Shop-Bold-H-with-Bag-1.png` replaced with correct `cropped-Adobe-Express-file.png` in Local SEO settings. Homepage schema now shows only the correct logo.
+
+### Deep Live-Site Audit (Apr 21)
+Scanned homepage, shop (/matjar/), cart, 3 product pages, 3 legal pages. All critical items pass: GA4 + FB Pixel live, footer legal links on every page, single header (no duplication), correct viewport meta, stock badges + viewer counters rendering, Buy Now + WhatsApp buttons on product pages, JSON-LD LocalBusiness schema correct.
+
+### Bug Fixes (Apr 20 carry-over)
+- ✅ **Cart badge double-count bug** — on `/matjar/` (shop page), clicking "Add to Cart" was making the basket icon jump to 2 instead of 1 (even with an empty cart on a fresh product)
+  - Root cause: `archive-product.php` had a manual JS listener on `added_to_cart` that did `countBadge.text(parseInt(countBadge.text()) + 1)` — this ran **after** WooCommerce's `woocommerce_add_to_cart_fragments` filter (in `functions.php`) had already replaced the badge with the correct server count, doubling the value
+  - Fix: removed the manual `+1` increment from `astra-child/archive-product.php` (lines 586–594); kept the scale-pulse animation for visual feedback; badge is now exclusively driven by the server-side fragment (single source of truth)
+  - Files touched locally: `astra-child/archive-product.php`
+  - **Upload target on server:** `public_html/wp-content/themes/astra/archive-product.php` (archive template lives in the **parent** Astra theme, per the file's own header comment)
+  - After upload: purge LiteSpeed Cache → hard-refresh `/matjar/` → test
+
+---
+
 ## ✅ COMPLETED TASKS (Apr 18 2026 Session)
 
 ### Functionality
@@ -195,10 +218,10 @@ Long-term vision: become the Marjan/Carrefour of Houara — a trusted local bran
 
 | Task | Notes |
 |------|-------|
-| **Logo** | No logo image yet — just text in header |
-| **#10 Checkout trust badges** | 🔒 "طلبك آمن 100%" section below confirm button |
-| **#12 Duplicate header check** | Quick visual audit needed |
-| **#15 Cart page consistency** | Menu/header consistency check |
+| ~~**Logo**~~ | ✅ DONE — orange H/bag image live at `/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png` |
+| ~~**#10 Checkout trust badges**~~ | ✅ DONE — 🔒💵🚚 badges added in functions.php via `woocommerce_review_order_after_submit` |
+| ~~**#12 Duplicate header check**~~ | ✅ DONE — no duplicates, all templates use single custom header, Astra #masthead hidden |
+| ~~**#15 Cart page consistency**~~ | ✅ DONE — cart confirmed looking good |
 | **#21 Customer testimonials** | After first real orders come in |
 
 ---

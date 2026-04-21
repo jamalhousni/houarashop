@@ -52,3 +52,72 @@
     .site-logo-img--mobile { height: 30px !important; }
     .site-logo-img--footer { height: 32px !important; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   HIDE ASTRA THEME'S SITE-TITLE TEXT on custom template pages
+   Astra renders "هوارة شوب" as text — we only want the H-bag icon.
+   Target only the site-title/branding text, not the whole header.
+   ══════════════════════════════════════════════════════════════ */
+.ast-site-identity .site-title,
+.ast-site-identity .site-description,
+.site-branding .site-title,
+.site-branding .site-description,
+span.site-title,
+h1.site-title,
+h2.site-title,
+p.site-title { display: none !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   WOOCOMMERCE ORDER DETAILS & SUMMARY STYLING
+   Fixing bad italic fonts, and improving overall presentation
+   ══════════════════════════════════════════════════════════════ */
+.woocommerce-order-details,
+.woocommerce-customer-details {
+    font-style: normal !important;
+}
+
+.woocommerce-order-details address,
+.woocommerce-customer-details address {
+    font-style: normal !important;
+    font-family: inherit !important;
+    line-height: 1.6 !important;
+    margin-bottom: 0 !important;
+}
+
+.woocommerce-table--order-details th,
+.woocommerce-table--order-details td {
+    font-style: normal !important;
+    font-family: inherit !important;
+}
+
+/* Ensure no italic text in product item meta (like Free shipping, variations) */
+.woocommerce-table--order-details .wc-item-meta,
+.woocommerce-table--order-details .wc-item-meta li,
+.woocommerce-table--order-details .wc-item-meta p {
+    font-style: normal !important;
+    font-family: inherit !important;
+}
+
+/* Fix default italic text in shipping method string */
+.woocommerce-table--order-details tfoot td,
+.woocommerce-table--order-details tfoot th {
+    font-style: normal !important;
+}
+
+ul.order_details li strong,
+ul.order_details li,
+.woocommerce-thankyou-order-details {
+    font-style: normal !important;
+    font-family: inherit !important;
+}
+
+/* Also reset mark tag which is often italic in some themes */
+mark.order-number,
+mark.order-date,
+mark.order-status,
+.woocommerce-order-overview mark {
+    font-style: normal !important;
+    font-family: inherit !important;
+    font-weight: bold;
+}
+

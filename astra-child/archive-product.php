@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php woocommerce_page_title(); ?> — هوارة شوب</title>
+    <title>هوارة-شوب</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
     <style>
@@ -27,12 +27,12 @@ defined( 'ABSPATH' ) || exit;
         a { text-decoration: none; color: inherit; }
 
         /* COUNTDOWN BAR */
-        .countdown-bar { background: #FF6B00; padding: 12px 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .countdown-bar p { color: #fff; font-size: 15px; font-weight: 700; }
+        .countdown-bar { background: #FF6B00; padding: 10px 20px; text-align: center; position: relative; z-index: 1001; }
+        .countdown-bar p { color: #fff; font-size: 18px; margin: 0; line-height: 1.2; font-weight: 700; }
         #timer { color: #FFE000; font-weight: 900; direction: ltr; display: inline-block; }
 
         /* HEADER */
-        .site-header { background: #1A1A2E; padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
+        .site-header { background: #1A1A2E; padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .logo { color: #fff; font-size: 26px; font-weight: 900; }
         .logo span { color: #FF6B00; }
         .header-nav { display: flex; gap: 20px; align-items: center; }
@@ -70,11 +70,11 @@ defined( 'ABSPATH' ) || exit;
         .products-section { padding: 30px 40px 60px; max-width: 1200px; margin: 0 auto; }
 
         /* WHATSAPP CTA */
-        .whatsapp-section { background: #25D366; padding: 60px 40px; text-align: center; }
-        .whatsapp-section h2 { color: #fff; font-size: 28px; font-weight: 900; margin-bottom: 12px; }
-        .whatsapp-section p { color: rgba(255,255,255,0.85); font-size: 16px; margin-bottom: 30px; }
-        .btn-wa-big { background: #fff; color: #25D366; padding: 18px 50px; border-radius: 8px; font-size: 18px; font-weight: 900; display: inline-flex; align-items: center; gap: 12px; font-family: 'Cairo', sans-serif; transition: all 0.3s; }
-        .btn-wa-big:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .whatsapp-section { background: #25D366; padding: 20px 40px; text-align: center; }
+        .whatsapp-section h2 { color: #fff; font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+        .whatsapp-section p { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 20px; }
+        .btn-wa-big { background: #fff; color: #25D366; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; font-family: 'Cairo', sans-serif; transition: all 0.3s; }
+        .btn-wa-big:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
         /* FOOTER */
         .site-footer { background: #111122; padding: 40px; text-align: center; }
@@ -212,8 +212,8 @@ defined( 'ABSPATH' ) || exit;
           line-height: 1.4 !important;
         }
 
-        .woocommerce ul.products li.product .button.add_to_cart_button,
-        .woocommerce ul.products li.product a.add_to_cart_button {
+        .woocommerce ul.products li.product .button,
+        .woocommerce ul.products li.product a.button {
           background: #1A1A2E !important;
           color: #fff !important;
           font-family: 'Cairo', sans-serif !important;
@@ -230,8 +230,8 @@ defined( 'ABSPATH' ) || exit;
           text-decoration: none !important;
           width: calc(100% - 32px) !important;
         }
-        .woocommerce ul.products li.product .button.add_to_cart_button:hover,
-        .woocommerce ul.products li.product a.add_to_cart_button:hover {
+        .woocommerce ul.products li.product .button:hover,
+        .woocommerce ul.products li.product a.button:hover {
           background: #FF6B00 !important;
         }
         .woocommerce ul.products li.product .added_to_cart {
@@ -312,7 +312,7 @@ defined( 'ABSPATH' ) || exit;
             .archive-header p { font-size: 14px; }
             .archive-breadcrumb { padding: 10px 20px; }
             .products-section { padding: 20px 15px 40px; }
-            .whatsapp-section { padding: 40px 20px; }
+            .whatsapp-section { padding: 15px 20px; }
             .site-footer { padding: 30px 20px; }
         }
         @media (max-width: 600px) {
@@ -325,13 +325,36 @@ defined( 'ABSPATH' ) || exit;
                 font-size: 0.85rem !important;
                 padding: 10px 12px 4px !important;
             }
-            .woocommerce ul.products li.product .button.add_to_cart_button,
-            .woocommerce ul.products li.product a.add_to_cart_button {
+            .woocommerce ul.products li.product .button,
+            .woocommerce ul.products li.product a.button {
                 font-size: 0.8rem !important;
                 padding: 10px 12px !important;
                 margin: 6px 12px 12px !important;
                 width: calc(100% - 24px) !important;
             }
+        }
+
+        /* --- CATEGORY FILTER PILLS --- */
+        .hs-filter-pills {
+            display: flex; gap: 10px; padding: 14px 40px 22px; max-width: 1200px;
+            margin: 0 auto; overflow-x: auto; overflow-y: hidden;
+            scrollbar-width: none; -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch; direction: rtl;
+        }
+        .hs-filter-pills::-webkit-scrollbar { display: none; }
+        .hs-filter-pill {
+            flex-shrink: 0; background: #fff; color: #1A1A2E;
+            border: 2px solid #e8e8e8; padding: 10px 20px; border-radius: 50px;
+            font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 14px;
+            cursor: pointer; transition: all 0.2s; white-space: nowrap; line-height: 1.2;
+        }
+        .hs-filter-pill:hover { border-color: #FF6B00; color: #FF6B00; }
+        .hs-filter-pill.active { background: #FF6B00; color: #fff; border-color: #FF6B00; box-shadow: 0 4px 12px rgba(255,107,0,0.25); }
+        .hs-filter-pill:focus { outline: 2px solid #FF6B00; outline-offset: 2px; }
+        .hs-no-products { text-align: center; padding: 50px 20px; color: #777; font-size: 16px; font-weight: 600; grid-column: 1 / -1; }
+        @media (max-width: 768px) {
+            .hs-filter-pills { padding: 10px 15px 18px; gap: 8px; }
+            .hs-filter-pill { padding: 8px 16px; font-size: 13px; }
         }
     </style>
 </head>
@@ -343,7 +366,11 @@ defined( 'ABSPATH' ) || exit;
 <!-- MOBILE NAV -->
 <nav class="mobile-nav" id="mobileNav">
     <div class="mobile-nav-header">
-        <div class="mobile-nav-logo">هوارة <span>شوب</span></div>
+        <div class="mobile-nav-logo">
+            <a href="<?php echo home_url('/'); ?>" class="logo-img-link">
+                <img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img site-logo-img--mobile" style="height: 44px; width: auto; object-fit: contain;">
+            </a>
+        </div>
         <button class="close-nav" onclick="closeMenu()">✕</button>
     </div>
     <a href="<?php echo home_url('/'); ?>">🏠 الرئيسية</a>
@@ -356,8 +383,8 @@ defined( 'ABSPATH' ) || exit;
 <!-- COUNTDOWN BAR -->
 <div class="countdown-bar">
     <p>
-        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم - التوصيل داخل مدينة أولاد تايمة &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
-        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة - التوصيل داخل مدينة أولاد تايمة</span>
+        <span id="promo-text-today" style="display:none;">🚚 اطلب قبل 04:00 مساءاً ليصلك طلبك اليوم &nbsp;&nbsp; ⏱️ الوقت المتبقي: <span id="timer"></span></span>
+        <span id="promo-text-tomorrow" style="display:none;">🚀 اطلب الآن لضمان توصيل طلبك خلال 24 ساعة</span>
     </p>
 </div>
 
@@ -367,7 +394,11 @@ defined( 'ABSPATH' ) || exit;
         <button class="hamburger" onclick="openMenu()">
             <span></span><span></span><span></span>
         </button>
-        <div class="logo">هوارة <span>شوب</span></div>
+        <div class="logo">
+            <a href="<?php echo home_url('/'); ?>" class="logo-img-link">
+                <img src="https://houarashop.com/wp-content/uploads/2026/04/cropped-Adobe-Express-file.png" alt="هوارة شوب" class="site-logo-img" style="height: 44px; width: auto; object-fit: contain;">
+            </a>
+        </div>
     </div>
     <nav class="header-nav">
         <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
@@ -427,6 +458,23 @@ defined( 'ABSPATH' ) || exit;
     }
     ?>
 </div>
+
+<?php
+// Category filter pills — fetched from WooCommerce product_cat taxonomy
+$houara_categories = get_terms( array(
+    'taxonomy'   => 'product_cat',
+    'hide_empty' => true,
+    'orderby'    => 'count',
+    'order'      => 'DESC',
+) );
+if ( ! is_wp_error( $houara_categories ) && ! empty( $houara_categories ) ) : ?>
+<nav class="hs-filter-pills" role="tablist" aria-label="تصفية حسب الفئة">
+    <button type="button" class="hs-filter-pill active" data-category="all" role="tab" aria-selected="true">الكل</button>
+    <?php foreach ( $houara_categories as $hs_cat ) : ?>
+        <button type="button" class="hs-filter-pill" data-category="<?php echo esc_attr( $hs_cat->slug ); ?>" role="tab" aria-selected="false"><?php echo esc_html( $hs_cat->name ); ?></button>
+    <?php endforeach; ?>
+</nav>
+<?php endif; ?>
 
 <!-- PRODUCTS LOOP -->
 <div class="products-section">
@@ -491,18 +539,7 @@ defined( 'ABSPATH' ) || exit;
 </section>
 
 <!-- FOOTER -->
-<footer class="site-footer">
-    <div class="footer-logo">هوارة <span>شوب</span></div>
-    <p class="footer-tagline">متجرك المحلي في أولاد تايمة — توصيل في نفس اليوم</p>
-    <p class="footer-phone">📞 اتصل بنا: <a href="tel:+212702048470">+212 702 04 84 70</a></p>
-    <div class="footer-links">
-        <a href="<?php echo home_url('/'); ?>">الرئيسية</a>
-        <a href="<?php echo home_url('/matjar/'); ?>">المتجر</a>
-        <a href="<?php echo home_url('/contact/'); ?>">تواصل معنا</a>
-        <a href="https://wa.me/212702048470" target="_blank">واتساب</a>
-    </div>
-    <p class="footer-copy">© <?php echo date('Y'); ?> هوارة شوب — جميع الحقوق محفوظة</p>
-</footer>
+<?php houarashop_render_footer(); ?>
 
 <script>
 function updateTimer() {
@@ -545,12 +582,12 @@ function closeMenu() {
     document.body.style.overflow = '';
 }
 
-// Instant cart counter update
+// Cart counter animation ONLY (badge text is updated by WooCommerce fragments —
+// do NOT manually increment here or it will double-count)
 if (typeof jQuery !== 'undefined') {
-    jQuery(document).on('added_to_cart', function() {
+    jQuery(document.body).on('added_to_cart', function() {
         var countBadge = jQuery('.cart-count-badge');
         if (countBadge.length) {
-            countBadge.text(parseInt(countBadge.text() || 0) + 1);
             countBadge.parent().css({ transform: 'scale(1.1)', transition: 'transform 0.2s', display: 'inline-block' });
             setTimeout(function() { countBadge.parent().css('transform', 'scale(1)'); }, 300);
         }
@@ -568,6 +605,87 @@ if (typeof jQuery !== 'undefined') {
         setTimeout(function() { window.scrollTo(0, lastScrollY); }, 300);
     });
 }
+</script>
+
+<script>
+/* ── HOUARA Category Filter — vanilla JS ──
+   Filters products in-place by toggling display on li.product cards.
+   Uses WooCommerce's existing .product_cat-{slug} classes (post_class).
+   Syncs with URL via history.pushState so filters are shareable/bookmarkable. */
+(function(){
+    function init(){
+        var pills = document.querySelectorAll('.hs-filter-pill');
+        if (!pills.length) return;
+        var container = document.querySelector('.products-section .woocommerce') || document.querySelector('.products-section');
+        if (!container) return;
+
+        function getProducts(){ return container.querySelectorAll('ul.products li.product'); }
+
+        function ensureEmptyMsg(){
+            var msg = document.getElementById('hs-no-products');
+            if (msg) return msg;
+            msg = document.createElement('div');
+            msg.id = 'hs-no-products';
+            msg.className = 'hs-no-products';
+            msg.textContent = '🔍 لا توجد منتجات في هذه الفئة حالياً';
+            msg.style.display = 'none';
+            var list = container.querySelector('ul.products');
+            if (list) list.appendChild(msg); else container.appendChild(msg);
+            return msg;
+        }
+
+        function applyFilter(category){
+            category = category || 'all';
+            var products = getProducts();
+            var visible = 0;
+            products.forEach(function(p){
+                var match = (category === 'all') || p.classList.contains('product_cat-' + category);
+                p.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+            pills.forEach(function(pill){
+                var isActive = pill.getAttribute('data-category') === category;
+                pill.classList.toggle('active', isActive);
+                pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+            var msg = ensureEmptyMsg();
+            msg.style.display = (visible === 0) ? 'block' : 'none';
+        }
+
+        function getUrlCategory(){
+            try { return new URLSearchParams(window.location.search).get('category') || 'all'; }
+            catch(e){ return 'all'; }
+        }
+
+        function setUrlCategory(category){
+            try {
+                var url = new URL(window.location.href);
+                if (category === 'all') url.searchParams.delete('category');
+                else url.searchParams.set('category', category);
+                history.pushState({ houaraCategory: category }, '', url.toString());
+            } catch(e){}
+        }
+
+        pills.forEach(function(pill){
+            pill.addEventListener('click', function(){
+                var cat = this.getAttribute('data-category') || 'all';
+                applyFilter(cat);
+                setUrlCategory(cat);
+                this.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+            });
+        });
+
+        window.addEventListener('popstate', function(){ applyFilter(getUrlCategory()); });
+
+        applyFilter(getUrlCategory());
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
 </script>
 
 <?php wp_footer(); ?>
